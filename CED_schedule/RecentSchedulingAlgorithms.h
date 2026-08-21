@@ -1,11 +1,14 @@
+// 段落说明：定义或选择编译期配置分支；未显式覆盖时保持论文/Runbook 默认值。
 #ifndef CED_SCHEDULE_RECENT_SCHEDULING_ALGORITHMS_H
 #define CED_SCHEDULE_RECENT_SCHEDULING_ALGORITHMS_H
 
+// 段落说明：引入本段实现依赖的项目接口或 C++ 标准库组件。
 #include "Multimethod.h"
 #include <array>
 #include <string>
 #include <vector>
 
+// 段落说明：定义本模块使用的类型、状态或配置数据结构。
 enum class RecentAlgorithm {
   MadDE = 0,
   NLSHADELBC,
@@ -19,6 +22,7 @@ enum class RecentAlgorithm {
   StandardGA
 };
 
+// 段落说明：声明并初始化本阶段所需的参数、缓存或统计状态。
 const char* RecentAlgorithmName(RecentAlgorithm algorithm);
 bool ParseRecentAlgorithm(const std::string& name, RecentAlgorithm& algorithm);
 
@@ -33,6 +37,7 @@ public:
   double DTGPAlpha() const { return gp_alpha_; }
   int DTGPActiveNodes() const;
 
+// 段落说明：定义本模块使用的类型、状态或配置数据结构。
 private:
   struct ShadeMemory {
     std::array<double, 10> f{};
@@ -40,6 +45,7 @@ private:
     int position = 0;
   };
 
+  // 段落说明：定义本模块使用的类型、状态或配置数据结构。
   static constexpr int GPTerminalCount = 11;
   static constexpr int GPMaxDepth = 8;
   static constexpr int GPNodeCount = (1 << (GPMaxDepth + 1)) - 1;
@@ -53,6 +59,7 @@ private:
     double fitness = 1e300;
   };
 
+  // 段落说明：根据搜索状态选择动作并用改进收益更新策略统计量。
   MultiMet& solver_;
   RecentAlgorithm algorithm_;
   ShadeMemory shade_;
@@ -66,6 +73,7 @@ private:
   double gp_alpha_ = 5.0;
   double gp_smoothed_success_ = 0.2;
 
+  // 段落说明：声明并初始化本阶段所需的参数、缓存或统计状态。
   void MadDEStep(int generation, int max_generation, int p_start, int p_end);
   void NLSHADELBStep(int generation, int max_generation, int p_start,
                      int p_end);
@@ -83,6 +91,7 @@ private:
   void StandardGAStep(int generation, int max_generation, int p_start,
                       int p_end);
 
+  // 段落说明：计算、比较或保存候选解质量；最终报告值仍由真实调度目标复核。
   void EvaluateWithProxyPolicy(int index, int generation, int max_generation,
                                double old_fit);
   void Bound(double* candidate, const double* parent) const;
@@ -101,4 +110,5 @@ private:
   void UpdateGPTerminalWeights(double sampling_ratio);
 };
 
+// 段落说明：执行当前逻辑段的数据变换、边界处理或状态更新。
 #endif

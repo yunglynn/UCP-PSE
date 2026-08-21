@@ -1,19 +1,23 @@
 #!/bin/zsh
 set -eu
 
+# 段落说明：执行本阶段的路径设置、参数准备或文件处理。
 repo=${0:A:h:h}
 cd "$repo"
 
+# 段落说明：创建本次发布或实验需要的输出目录；已有目录保持不变。
 mpicxx="$repo/.local/mpich/bin/mpic++"
 mpirun="$repo/.local/mpich/bin/mpirun"
 outdir="$repo/results/component_vs_nine_metrics_10x_20260816"
 bindir="$repo/build/component_vs_nine_metrics_10x_20260816"
 mkdir -p "$outdir" "$bindir"
 
+# 段落说明：执行本阶段的路径设置、参数准备或文件处理。
 scales=(1000 10000 100000 1000000)
 methods=(component_policy madde qphh fca_g soea_bbrl hga bipop_cde amtsa nlshade_lbc slpso_ars)
 seeds=(20260616 20260617 20260618 20260619 20260620 20260621 20260622 20260623 20260624 20260625)
 
+# 段落说明：定义可复用的脚本函数，封装这一阶段的编译、运行或汇总操作。
 compile_component() {
   local scale=$1
   local exe="$bindir/component_policy_t${scale}"
@@ -24,6 +28,7 @@ compile_component() {
     CED_schedule/MultimethodMeme.cpp CED_schedule/Problems.cpp -o "$exe"
 }
 
+# 段落说明：定义可复用的脚本函数，封装这一阶段的编译、运行或汇总操作。
 compile_recent() {
   local scale=$1
   local exe="$bindir/recent_t${scale}"
@@ -35,6 +40,7 @@ compile_recent() {
     CED_schedule/Problems.cpp -o "$exe"
 }
 
+# 段落说明：定义可复用的脚本函数，封装这一阶段的编译、运行或汇总操作。
 compile_standalone() {
   local method=$1
   local source=$2
@@ -46,6 +52,7 @@ compile_standalone() {
     CED_schedule/Problems.cpp -o "$exe"
 }
 
+# 段落说明：遍历论文规定的规模、方法或配对随机种子，逐项执行同一流程。
 for scale in $scales; do
   compile_component $scale
   compile_recent $scale
@@ -58,8 +65,10 @@ for scale in $scales; do
   compile_standalone amtsa amtsa $scale
 done
 
+# 段落说明：遍历论文规定的规模、方法或配对随机种子，逐项执行同一流程。
 for scale in $scales; do
   for method in $methods; do
+    # 控制说明：处理这一算法或动作分支，完成后退出当前分派。
     case "$method" in
       component_policy) exe="$bindir/component_policy_t${scale}" ;;
       nlshade_lbc|slpso_ars) exe="$bindir/recent_t${scale}" ;;
@@ -89,4 +98,5 @@ for scale in $scales; do
   done
 done
 
+# 段落说明：执行本阶段的路径设置、参数准备或文件处理。
 "$repo/tools/summarize_component_vs_nine_metrics_10x.sh"

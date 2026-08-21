@@ -1,20 +1,27 @@
+// 段落说明：定义或选择编译期配置分支；未显式覆盖时保持论文/Runbook 默认值。
 #ifndef CED_SCHEDULE_PROBLEMS_H
 #define CED_SCHEDULE_PROBLEMS_H
 
+// 段落说明：引入本段实现依赖的项目接口或 C++ 标准库组件。
 #include <map>
 #include <vector>
 using namespace std;
 
+// 段落说明：声明并初始化本阶段所需的参数、缓存或统计状态。
 typedef unsigned short DistanceValue;
+// 控制说明：选择当前编译配置对应的实现路径。
 #ifndef DISTANCE_SCALE
 #define DISTANCE_SCALE 3.0
 #endif
 inline constexpr double kTransmitPowerDbm = 23.0;
 
+// 段落说明：实现 `DecodeDistance`：完成该函数负责的数据准备、算法步骤和状态返回。
 inline double DecodeDistance(DistanceValue value) {
+  // 控制说明：返回本阶段计算结果或状态码给调用方。
   return static_cast<double>(value) * DISTANCE_SCALE;
 }
 
+// 段落说明：定义本模块使用的类型、状态或配置数据结构。
 typedef struct {
   double Computation;
   double Communication;
@@ -26,6 +33,7 @@ typedef struct {
   vector<int> AvailEdgeServerList;
 } CETask;
 
+// 段落说明：定义本模块使用的类型、状态或配置数据结构。
 struct CEDLoadDistribution {
   double mean = 0.0;
   double standard_deviation = 0.0;
@@ -39,6 +47,7 @@ struct CEDLoadDistribution {
   double active_jain_index = 0.0;
 };
 
+// 段落说明：定义本模块使用的类型、状态或配置数据结构。
 struct CEDDetailedMetrics {
   double objective = 0.0;
   double energy = 0.0;
@@ -61,8 +70,10 @@ struct CEDDetailedMetrics {
   CEDLoadDistribution device_idle_time;
 };
 
+// 段落说明：执行当前逻辑段的数据变换、边界处理或状态更新。
 const CEDDetailedMetrics& CED_LastDetailedMetrics();
 
+// 段落说明：维护轻量代理的特征、预测、误差或审计状态，用于减少昂贵的真实评估。
 double CED_Schedule(double* var, int Cnum, int Enum, int Dnum, int CE_Tnum,
                     int M_Jnum, int M_OPTnum, CETask* CETask_Property,
                     double* MTask_Time, DistanceValue** EtoD_Distance,
@@ -115,4 +126,5 @@ void CED_SetCompactGeometry(const double* edge_x, const double* edge_y,
                             const double* device_x, const double* device_y,
                             int edge_count, int device_count);
 
+// 段落说明：执行当前逻辑段的数据变换、边界处理或状态更新。
 #endif

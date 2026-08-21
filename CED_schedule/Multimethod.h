@@ -1,6 +1,8 @@
+// 段落说明：定义或选择编译期配置分支；未显式覆盖时保持论文/Runbook 默认值。
 #ifndef CED_SCHEDULE_MULTIMETHOD_H
 #define CED_SCHEDULE_MULTIMETHOD_H
 
+// 段落说明：引入本段实现依赖的项目接口或 C++ 标准库组件。
 #include "Population.h"
 #include "Problems.h"
 #include <algorithm>
@@ -14,6 +16,7 @@
 #include <vector>
 using namespace std;
 
+// 段落说明：声明并初始化本阶段所需的参数、缓存或统计状态。
 typedef double (*FF)(double* var, int Cnum, int Enum, int Dnum, int CE_Tnum,
                      int M_Jnum, int M_OPTnum, CETask* CETask_Property,
                      double* MTask_Time, DistanceValue** EtoD_Distance,
@@ -25,6 +28,7 @@ typedef double (*FF)(double* var, int Cnum, int Enum, int Dnum, int CE_Tnum,
                      map<int, double>* Edge_Device_comm, double** ST,
                      double** ET, double* CE_ST, double* CE_ET);
 
+// 段落说明：定义本模块使用的类型、状态或配置数据结构。
 enum class SearchAlg {
   Adaptive = 0,
   GA,
@@ -60,12 +64,14 @@ enum class SearchAlg {
   BA
 };
 
+// 段落说明：定义本模块使用的类型、状态或配置数据结构。
 class MultiMet : public Population<double> {
 public:
   MultiMet(int psize, int nn, double lb, double ub, int c_num, int e_num,
            int d_num, int ce_tnum, int m_jnum, int m_optnum, FF evaluate);
   ~MultiMet();
 
+// 段落说明：执行当前逻辑段的数据变换、边界处理或状态更新。
 public:
   FF EvaluFunc;
 
@@ -79,6 +85,7 @@ public:
   vector<int>* AvailDeviceList;
   double* EnergyList;
 
+  // 段落说明：声明并初始化本阶段所需的参数、缓存或统计状态。
   vector<int>* CloudDevices;
   vector<int>* EdgeDevices;
   vector<int>* CloudLoad;
@@ -113,6 +120,7 @@ public:
   // CMAES parameter
   bool CMAisdone;
 
+  // 段落说明：声明并初始化本阶段所需的参数、缓存或统计状态。
   int lambda;
   int mu;
   double mucov;
@@ -135,6 +143,7 @@ public:
   //! Sorting index of sample population.
   int* index;
 
+  // 段落说明：按确定性种子驱动随机采样，使同一配置和种子能够重复。
   double chiN;
   //! Lower triangular matrix: i>=j for C[i][j].
   double** C;
@@ -204,6 +213,7 @@ public:
     HyperStateCount = 4
   };
 
+  // 段落说明：定义本模块使用的类型、状态或配置数据结构。
   enum AdeBaseStrategy {
     AdeBaseCurrent = 0,
     AdeBasePersonalBest = 1,
@@ -215,6 +225,7 @@ public:
     AdeBaseEliteMean = 7
   };
 
+  // 段落说明：定义本模块使用的类型、状态或配置数据结构。
   enum AdeDiffMode {
     AdeDiffAdaptivePairs = 0,
     AdeDiffRand1 = 1,
@@ -227,6 +238,7 @@ public:
     AdeDiffBeeNeighbor = 8
   };
 
+  // 段落说明：定义本模块使用的类型、状态或配置数据结构。
   enum HyperState {
     HyperEarly = 0,
     HyperMiddle = 1,
@@ -234,6 +246,7 @@ public:
     HyperStagnation = 3
   };
 
+  // 段落说明：定义本模块使用的类型、状态或配置数据结构。
   enum AdeSeriIndex {
     AdeBaseMode = 0,
     AdeBaseIndex = 1,
@@ -251,6 +264,7 @@ public:
     AdePathRecentMix = 24
   };
 
+  // 段落说明：定义本模块使用的类型、状态或配置数据结构。
   struct AdePolicyTables {
     double base[HyperStateCount][AdeBaseModeCount];
     double mutation[HyperStateCount][AdeMutationTypeCount];
@@ -261,6 +275,7 @@ public:
                [AdeMutationTypeCount];
   };
 
+  // 段落说明：定义本模块使用的类型、状态或配置数据结构。
   enum {
     MemePolicyActionCount = 8,
     MemeConfigurationActionCount = 4,
@@ -268,6 +283,7 @@ public:
     MemeProxyPolicyActionCount = 2
   };
 
+  // 段落说明：定义本模块使用的类型、状态或配置数据结构。
   struct MemePolicyTables {
     double configuration[HyperStateCount][MemeConfigurationActionCount];
     double scope[HyperStateCount][MemeScopeActionCount];
@@ -275,6 +291,7 @@ public:
     double proxy[HyperStateCount][MemeProxyPolicyActionCount];
   };
 
+  // 段落说明：定义本模块使用的类型、状态或配置数据结构。
   struct AdeTrialStats {
     int success_count;
     int trial_base_count[AdeBaseModeCount];
@@ -305,15 +322,18 @@ public:
     double policy_path_reward_sqrt[AdeBaseModeCount][AdeDiffModeCount]
                                   [AdeMutationTypeCount];
 
+    // 段落说明：执行当前逻辑段的数据变换、边界处理或状态更新。
     AdeTrialStats();
     void reset();
   };
 
+  // 段落说明：定义本模块使用的类型、状态或配置数据结构。
   struct AdeSparseArchiveEntry {
     vector<int> dimensions;
     vector<double> previous_values;
   };
 
+  // 段落说明：维护轻量代理的特征、预测、误差或审计状态，用于减少昂贵的真实评估。
   AdePolicyTables ade_policy;
   double* ade_path_center;
   double* ade_recent_path;
@@ -344,6 +364,7 @@ public:
   int current_meme_configuration;
   int current_meme_scope;
 
+// 段落说明：计算、比较或保存候选解质量；最终报告值仍由真实调度目标复核。
 public:
   double randnorm(double miu, double score);
   void pop_update(int p_start, int p_end);
@@ -363,6 +384,7 @@ public:
   SearchAlg SelectAdaptiveGlobalAlgorithm();
   void UpdateAdaptiveGlobalAlgorithm(SearchAlg algorithm, double reward);
 
+  // 段落说明：维护轻量代理的特征、预测、误差或审计状态，用于减少昂贵的真实评估。
   static int seri_diff_left_index(int term);
   static int seri_diff_right_index(int term);
   static int seri_diff_weight_index(int term);
