@@ -1,0 +1,15 @@
+benchmark=regional_multi_factory_iiot
+seed=20260807
+tasks=1000000
+manufacturing_jobs=1000000
+operations_per_job=5
+factories=1000
+cloud_compute_nodes=16000
+edge_compute_nodes=4000
+industrial_devices=64000
+factory_footprint_m=180x80
+factory_pitch_m=2000
+edge_nodes_per_factory=4
+devices_per_factory=64
+eligible_devices_per_operation=3
+source_note=Factory footprint and device-scale interpretation follow the 5G-ACIA industrial traffic-model example; topology and workload ratios are explicit synthetic benchmark assumptions.

@@ -25,6 +25,7 @@ mkdir -p "$stage/UCP-PSE/CED_schedule" "$stage/UCP-PSE/standalone_ced" \
 # snapshots, and third-party trees whose provenance is described in the docs.
 cp README.md EXPERIMENT_RUNBOOK.md .clang-format "$stage/UCP-PSE/"
 cp -R docs "$stage/UCP-PSE/"
+cp -R data "$stage/UCP-PSE/"
 cp CED_schedule/Config.h CED_schedule/Multimethod.h \
   CED_schedule/Population.h CED_schedule/Problems.h \
   CED_schedule/RecentSchedulingAlgorithms.h CED_schedule/main.cpp \
@@ -41,6 +42,7 @@ cp standalone_ced/README.md standalone_ced/REPRODUCTION_AUDIT.md \
   standalone_ced/hga.cpp standalone_ced/bipop_cde.cpp \
   standalone_ced/amtsa.cpp "$stage/UCP-PSE/standalone_ced/"
 cp tools/main_industrial_benchmark_compact.cpp \
+  tools/main_industrial_benchmark_dense.cpp tools/download_datasets.sh \
   tools/run_component_vs_nine_metrics_10x.sh \
   tools/summarize_component_vs_nine_metrics_10x.sh \
   tools/package_github_release.sh "$stage/UCP-PSE/tools/"

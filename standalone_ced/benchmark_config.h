@@ -27,36 +27,43 @@ inline unsigned experiment_seed() {
   return value == nullptr ? 20260616U
                           : static_cast<unsigned>(std::strtoul(value, nullptr, 10));
 }
-inline constexpr const char* kPowerPath =
-    "/Users/lailiyuanjun/Desktop/CED_schedule/CED_schedule/Power_Consumption.txt";
+#ifndef STANDALONE_POWER_FILE_PATH
+#define STANDALONE_POWER_FILE_PATH "data/Power_Consumption.txt"
+#endif
+inline constexpr const char* kPowerPath = STANDALONE_POWER_FILE_PATH;
 
 // 段落说明：定义或选择编译期配置分支；未显式覆盖时保持论文/Runbook 默认值。
 #if TNUM >= 1000000
 inline constexpr int kCloudCount = 16000;
 inline constexpr int kEdgeCount = 4000;
 inline constexpr int kDeviceCount = 64000;
-inline constexpr const char* kDataPath =
-    "/Users/lailiyuanjun/Desktop/data_generator/datamatrix_1000000_compact";
+#ifndef STANDALONE_DATA_FILE_PATH
+#define STANDALONE_DATA_FILE_PATH "data/datamatrix_1000000_compact"
+#endif
 #elif TNUM >= 100000
 inline constexpr int kCloudCount = 1600;
 inline constexpr int kEdgeCount = 400;
 inline constexpr int kDeviceCount = 6400;
-inline constexpr const char* kDataPath =
-    "/Users/lailiyuanjun/Desktop/data_generator/datamatrix_100000";
+#ifndef STANDALONE_DATA_FILE_PATH
+#define STANDALONE_DATA_FILE_PATH "data/datamatrix_100000"
+#endif
 #elif TNUM >= 10000
 inline constexpr int kCloudCount = 160;
 inline constexpr int kEdgeCount = 40;
 inline constexpr int kDeviceCount = 640;
-inline constexpr const char* kDataPath =
-    "/Users/lailiyuanjun/Desktop/data_generator/datamatrix_10000";
+#ifndef STANDALONE_DATA_FILE_PATH
+#define STANDALONE_DATA_FILE_PATH "data/datamatrix_10000"
+#endif
 // 控制说明：选择当前编译配置对应的实现路径。
 #else
 inline constexpr int kCloudCount = 16;
 inline constexpr int kEdgeCount = 4;
 inline constexpr int kDeviceCount = 64;
-inline constexpr const char* kDataPath =
-    "/Users/lailiyuanjun/Desktop/data_generator/datamatrix_1000";
+#ifndef STANDALONE_DATA_FILE_PATH
+#define STANDALONE_DATA_FILE_PATH "data/datamatrix_1000"
 #endif
+#endif
+inline constexpr const char* kDataPath = STANDALONE_DATA_FILE_PATH;
 
 // 段落说明：执行当前逻辑段的数据变换、边界处理或状态更新。
 } // namespace standalone_ced

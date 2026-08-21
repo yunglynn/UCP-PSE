@@ -3,17 +3,13 @@
 #include "Config.h"
 #ifndef DATA_FILE_PATH
 #if defined(TNUM) && TNUM >= 1000000
-#define DATA_FILE_PATH                                                         \
-  "/Users/lailiyuanjun/Desktop/data_generator/datamatrix_1000000_compact"
+#define DATA_FILE_PATH "data/datamatrix_1000000_compact"
 #elif defined(TNUM) && TNUM >= 100000
-#define DATA_FILE_PATH                                                         \
-  "/Users/lailiyuanjun/Desktop/data_generator/datamatrix_100000"
+#define DATA_FILE_PATH "data/datamatrix_100000"
 #elif defined(TNUM) && TNUM >= 10000
-#define DATA_FILE_PATH                                                         \
-  "/Users/lailiyuanjun/Desktop/data_generator/datamatrix_10000"
+#define DATA_FILE_PATH "data/datamatrix_10000"
 #elif defined(TNUM) && TNUM >= 1000
-#define DATA_FILE_PATH                                                         \
-  "/Users/lailiyuanjun/Desktop/data_generator/datamatrix_1000"
+#define DATA_FILE_PATH "data/datamatrix_1000"
 // 控制说明：选择当前编译配置对应的实现路径。
 #else
 #define DATA_FILE_PATH                                                         \
@@ -21,9 +17,7 @@
 #endif
 #endif
 #ifndef POWER_FILE_PATH
-#define POWER_FILE_PATH                                                        \
-  "/Users/lailiyuanjun/Desktop/CED_schedule/CED_schedule/"                     \
-  "Power_Consumption.txt"
+#define POWER_FILE_PATH "data/Power_Consumption.txt"
 #endif
 #ifndef ADE_SKIP_EVAL_IMMIGRANTS
 #define ADE_SKIP_EVAL_IMMIGRANTS 1
