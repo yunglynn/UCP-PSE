@@ -5,9 +5,21 @@ set -eu
 repo=${0:A:h:h}
 cd "$repo"
 
-# 段落说明：创建本次发布或实验需要的输出目录；已有目录保持不变。
-mpicxx="$repo/.local/mpich/bin/mpic++"
-mpirun="$repo/.local/mpich/bin/mpirun"
+# 段落说明：优先使用显式 MPICXX/MPIRUN，其次使用项目本地 MPI，最后回退到 PATH。
+mpicxx=${MPICXX:-"$repo/.local/mpich/bin/mpic++"}
+mpirun=${MPIRUN:-"$repo/.local/mpich/bin/mpirun"}
+if [[ ! -x "$mpicxx" ]]; then
+  mpicxx=$(command -v mpic++ || true)
+fi
+if [[ ! -x "$mpirun" ]]; then
+  mpirun=$(command -v mpirun || true)
+fi
+if [[ -z "$mpicxx" || -z "$mpirun" ]]; then
+  print -u2 -- "MPI not found. Set MPICXX and MPIRUN or install an MPI implementation."
+  exit 1
+fi
+
+# 段落说明：创建本次实验的可执行文件目录和原始结果目录。
 outdir="$repo/results/component_vs_nine_metrics_10x_20260816"
 bindir="$repo/build/component_vs_nine_metrics_10x_20260816"
 mkdir -p "$outdir" "$bindir"
