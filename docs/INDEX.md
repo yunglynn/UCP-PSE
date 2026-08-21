@@ -2,16 +2,33 @@
 
 ## Reading order
 
-1. [`../EXPERIMENT_RUNBOOK.md`](../EXPERIMENT_RUNBOOK.md): canonical seeds,
+1. Run `../tools/download_datasets.sh` and require all checksums to pass.
+2. [`DATASETS_GUIDE.md`](DATASETS_GUIDE.md): release download, generators,
+   file formats, path selection, validation, and troubleshooting.
+3. [`../EXPERIMENT_RUNBOOK.md`](../EXPERIMENT_RUNBOOK.md): canonical seeds,
    compiler flags, MPI layout, timing convention, and protected defaults.
-2. [`UCP_PSE_GUIDE.md`](UCP_PSE_GUIDE.md): UCP-PSE functions, call flow,
+4. [`UCP_PSE_GUIDE.md`](UCP_PSE_GUIDE.md): UCP-PSE functions, call flow,
    configuration, and paper-to-code mapping.
-3. [`BASELINES_GUIDE.md`](BASELINES_GUIDE.md): nine baseline publications,
+5. [`BASELINES_GUIDE.md`](BASELINES_GUIDE.md): nine baseline publications,
    implementation locations, functions, commands, and adaptation boundaries.
-4. [`ABLATIONS_GUIDE.md`](ABLATIONS_GUIDE.md): the five paper ablations and
+6. [`ABLATIONS_GUIDE.md`](ABLATIONS_GUIDE.md): the five paper ablations and
    exact switches needed to reproduce them.
-5. [`DATASETS_GUIDE.md`](DATASETS_GUIDE.md): four-scale generator, file format,
-   validation, and use.
+
+## Required data gate
+
+Before compiling or running any table, verify:
+
+```bash
+test -f data/datamatrix_1000
+test -f data/datamatrix_10000
+test -f data/datamatrix_100000
+test -f data/datamatrix_1000000_compact
+(cd data && shasum -a 256 -c SHA256SUMS)
+```
+
+If any file is absent, run `tools/download_datasets.sh`. The matrices are
+public Release assets; their absence immediately after `git clone` is
+intentional because two expanded files exceed normal Git file limits.
 
 ## Source map
 

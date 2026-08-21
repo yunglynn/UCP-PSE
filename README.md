@@ -10,6 +10,27 @@ corresponding source file. The canonical experimental contract is
 [`EXPERIMENT_RUNBOOK.md`](EXPERIMENT_RUNBOOK.md); it takes precedence over old
 notes and historical result files.
 
+## Quick start: download the required data first
+
+The large matrices are attached to the public
+[`datasets-v1` GitHub Release](https://github.com/yunglynn/UCP-PSE/releases/tag/datasets-v1)
+rather than stored in Git history. A plain clone therefore contains metadata
+and checksums but not the four expanded matrices. Prepare them with one command:
+
+```bash
+git clone https://github.com/yunglynn/UCP-PSE.git
+cd UCP-PSE
+tools/download_datasets.sh
+```
+
+The script uses `curl`, resumes interrupted downloads, verifies every `.gz`
+asset, extracts it under `data/`, and verifies the expanded matrix again. A
+successful run ends with `All four UCP-PSE datasets are ready`.
+
+Do not run an experiment if `shasum -a 256 -c data/SHA256SUMS` fails. See
+[`docs/DATASETS_GUIDE.md`](docs/DATASETS_GUIDE.md) for manual download,
+generation, format, path override, disk-space and troubleshooting details.
+
 Important scope labels:
 
 - `CED_schedule/` contains UCP-PSE and the shared exact scheduling objective.

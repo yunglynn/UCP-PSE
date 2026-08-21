@@ -51,11 +51,20 @@ Do not define `MPI_INDEPENDENT_SEED=1`. Do not set `CED_SEED`. Do not enable `CE
 
 | `TNUM` | Data file |
 |---:|---|
-| 1,000 | `/Users/lailiyuanjun/Desktop/data_generator/datamatrix_1000` |
-| 10,000 | `/Users/lailiyuanjun/Desktop/data_generator/datamatrix_10000` |
-| 100,000 | `/Users/lailiyuanjun/Desktop/data_generator/datamatrix_100000` |
+| 1,000 | `data/datamatrix_1000` |
+| 10,000 | `data/datamatrix_10000` |
+| 100,000 | `data/datamatrix_100000` |
 
-The reproducible generator is `/Users/lailiyuanjun/Desktop/data_generator/data_generator/main_industrial_benchmark.cpp`, uses seed `20260807`, and writes a `.meta` sidecar for every matrix. Each manufacturing job has five operations, each operation has exactly three eligible industrial devices, and every computational task can use the four edge nodes in its factory. Computational dependencies are generated independently without switch fall-through. The computation--manufacturing coupling probabilities are 0.30 for no coupling, 0.25 for start coupling, 0.25 for completion coupling, and 0.20 for joint coupling.
+After cloning, run `tools/download_datasets.sh` and require both checksum stages
+to pass. The matrices are public assets in GitHub Release `datasets-v1`.
+The reproducible generator is `tools/main_industrial_benchmark_dense.cpp`, uses
+seed `20260807`, and writes a `.meta` sidecar for every matrix. Each
+manufacturing job has five operations, each operation has exactly three
+eligible industrial devices, and every computational task can use the four
+edge nodes in its factory. Computational dependencies are generated
+independently without switch fall-through. The computation--manufacturing
+coupling probabilities are 0.30 for no coupling, 0.25 for start coupling, 0.25
+for completion coupling, and 0.20 for joint coupling.
 
 Do not use `TNUM=100` as one of the formal three scales.
 
@@ -287,7 +296,8 @@ Changing `gamma` from 36 to 24 did not change the verified objective value at an
 `TNUM=1000000` is an extended stress test and is not part of the canonical
 three-scale baseline. It uses 1,000 factories, 16,000 cloud nodes, 4,000 edge
 nodes, and 64,000 industrial devices. The compact input is
-`/Users/lailiyuanjun/Desktop/data_generator/datamatrix_1000000_compact`.
+`data/datamatrix_1000000_compact` and is downloaded by the same
+`tools/download_datasets.sh` command.
 It stores node coordinates instead of the full edge--device and device--device
 distance matrices; distances are reconstructed on demand with the same
 `DISTANCE_SCALE` quantization.
